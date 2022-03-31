@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagListSerializerField()
-    author = serializers.SlugRelatedField()
+    author = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
 
     class Meta:
         model = Post
