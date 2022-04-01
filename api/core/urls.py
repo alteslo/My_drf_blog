@@ -15,4 +15,6 @@ urlpatterns = [
     path("feedback/", views.FeedBackView.as_view()),
     path('register/', views.RegisterView.as_view()),
     path('profile/', views.ProfileView.as_view()),
+    path("comments/", views.CommentView.as_view()),
+    path("comments/<slug:post_slug>/", views.CommentView.as_view()),
 ]
