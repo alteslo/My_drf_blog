@@ -157,6 +157,7 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.DjangoModelPermissions",),
+    'SEARCH_PARAM': 'q'
 }
 
 # #  CKEDITOR CONFIGURATION ##
@@ -188,3 +189,10 @@ CKEDITOR_CONFIGS = {
 }
 
 ###################################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env.email.host
+EMAIL_USE_TLS = env.email.use_tls
+EMAIL_PORT = env.email.port
+EMAIL_HOST_USER = env.email.host_user
+EMAIL_HOST_PASSWORD = env.email.host_password
