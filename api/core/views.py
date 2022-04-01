@@ -10,7 +10,7 @@ from django.core.mail import send_mail
 
 from taggit.models import Tag
 
-from core.serializers import PostSerializer, TagSerializer, ContactSerailizer
+from core.serializers import PostSerializer, TagSerializer, ContactSerailizer, RegisterSerializer, UserSerializer
 from core.models import Post
 
 
@@ -67,3 +67,21 @@ class FeedBackView(APIView):
             message = data.get('message')
             send_mail(f'От {name} | {subject}', message, from_email, ['alteslo31@gmail.com'])
             return Response({"success": "Sent"})
+
+
+class RegisterView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args,  **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "message": "Пользователь успешно создан",
+        })
+
+
+class ProfileView(generics.GenericAPIView):
+    pass
