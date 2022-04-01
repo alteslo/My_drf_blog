@@ -65,7 +65,8 @@ class FeedBackView(APIView):
             from_email = data.get('email')
             subject = data.get('subject')
             message = data.get('message')
-            send_mail(f'От {name} | {subject}', message, from_email, ['alteslo31@gmail.com'])
+            send_mail(f'От {name} | {subject}', message,
+                      from_email, ['alteslo31@gmail.com'])
             return Response({"success": "Sent"})
 
 
@@ -84,4 +85,10 @@ class RegisterView(generics.GenericAPIView):
 
 
 class ProfileView(generics.GenericAPIView):
-    pass
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get(self, request, *args,  **kwargs):
+        return Response({
+            "user": UserSerializer(request.user, context=self.get_serializer_context()).data,
+        })
